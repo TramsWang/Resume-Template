@@ -1,0 +1,128 @@
+% Copyright (c) 2024, Trams Wang
+% All rights reserved.
+
+% This source code is licensed under the BSD-style license found in the
+% LICENSE file in the root directory of this source tree. 
+
+
+\documentclass[10pt]{article} % 使用XeLatex编译
+
+\usepackage{geometry}
+\geometry{left=.1\paperwidth, right=.1\paperwidth, top=.05\paperheight, bottom=.1\paperheight}
+\usepackage{mwe}
+\usepackage{afterpage}
+\usepackage{xcolor}
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\usepackage{xeCJK}
+\usepackage{fontawesome}
+% \usepackage{multicol}
+
+\newcommand{\placetextbox}[3]{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
+\setbox0=\hbox{#3}% Put <stuff> in a box
+\AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+  \put(\LenToUnit{#1\paperwidth},\LenToUnit{#2\paperheight}){\vtop{{\null}\makebox[0pt][c]{#3}}}%
+}%
+}%
+
+\newcommand{\placeminipage}[4]{% \placeminipage{<horizontal pos>}{<vertical pos>}{<mini page width to total page width>}{<stuff>}
+\setbox0=\hbox{#3}% Put <stuff> in a box
+\AddToShipoutPictureFG*{% Add <stuff> to current page foreground
+  \put(\LenToUnit{#1\paperwidth},\LenToUnit{#2\paperheight}){\vtop{{\null}\makebox[0pt][c]{
+    \begin{minipage}{#3\paperwidth}#4\end{minipage}
+  }}}%
+}%
+}%
+
+\usepackage{titlesec}
+\titleformat{\section}         % Customise the \section command 
+  {\Large\scshape\raggedright} % Make the \section headers large (\Large),
+                               % small capitals (\scshape) and left aligned (\raggedright)
+  {}{0em}                      % Can be used to give a prefix to all sections, like 'Section ...'
+  {}                           % Can be used to insert code before the heading
+  [\titlerule]                 % Inserts a horizontal line after the heading
+\titlespacing*{\section}{0cm}{*1.8}{*1.8}
+
+\titleformat{\subsection}
+  {\raggedright}
+  {}{0em}
+  {}
+\titlespacing*{\subsection}{0cm}{*1.8}{*0.6}
+
+\newcommand{\datedsection}[2]{%
+  \section[#1]{#1 \hfill #2}%
+}
+\newcommand{\datedsubsection}[2]{%
+  \subsection[#1]{#1 \hfill #2}%
+}
+
+\begin{document}
+
+\newgeometry{left=.33\paperwidth, right=.1\paperwidth, top=.05\paperheight, bottom=.1\paperheight} % 首页右侧栏尺寸和布局
+\afterpage{\aftergroup\restoregeometry}
+
+\AddToShipoutPictureBG*{\AtPageLowerLeft{% 首页左侧栏尺寸和颜色
+\color{blue!20}\rule{.3\paperwidth}{\paperheight}
+}}
+
+    \placeminipage{0.15}{0.95}{0.25}{% 首页左侧栏内容
+      \begin{center}
+        \includegraphics[width=.2\paperwidth]{avatar.jpeg}
+
+        \vskip\baselineskip
+        \textbf{\Large 你的名字}
+        \vskip\baselineskip
+      \end{center}
+
+      \section{\normalsize \faLightbulbO 能力}
+      \begin{center}
+        \footnotesize
+        \begin{tabular}{ccc}
+          AI & 机器学习 & 深度学习
+        \end{tabular}
+      \end{center}
+
+      \section{\normalsize \faWrench 技术}
+      \begin{center}
+        \footnotesize
+        \begin{tabular}{ccc}
+          Java & Python & C++
+        \end{tabular}
+      \end{center}
+
+      \section{\normalsize \faGraduationCap 教育}
+      \footnotesize
+      \datedsubsection{\small 东川路男子职业学院}{2020 -- 2024}
+      Computer Science, Ph.D.
+
+      \vskip2\baselineskip
+      \begin{center}
+        \begin{tabular}{cc}
+            \faMobile & 123 1234 1234 \\
+            \faEnvelope & hello@world.com\\
+            \faWechat & xxx\\
+            \faGithub & xxx
+        \end{tabular}
+      \end{center}
+    }
+
+    % 简历正文内容
+    \section{\faTerminal 科研}
+      \datedsubsection{$\bullet$ \textbf{简历模板的自动生成}}{2020 -- 2024}
+        \begin{itemize}
+          \item 定制大模型Agent自动生成简历
+        \end{itemize}
+
+    \section{\faEdit 论文与专利}
+      \begin{itemize}
+        \item {[CCF A]} \textbf{First Last}, ``On the automatic generation of personalized resume,'' \textit{Famous AI Conference}, vol. 1, no. 2, pp. 33-44, 2024.
+      \end{itemize}
+
+    \section{\faServer 工业界项目}
+      参与某公司简历自动筛选系统的研发与部署。
+
+      \datedsubsection{$\bullet$ \textbf{简历自动筛选系统}}{2022 -- 2024}
+        \begin{itemize}
+          \item 微调简历大模型
+        \end{itemize}
+\end{document}
